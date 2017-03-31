@@ -6,7 +6,7 @@ module.exports = exports = function (str) {
   const wordsArr = sentenceArr.map((sentence) => {
     return sentence.trim().split(' ');
   });
-  
+
   const phraseMap = new Map();
   var phraseLength;
   var phrase;
@@ -20,7 +20,7 @@ module.exports = exports = function (str) {
     }
 
     for (let i = 0; i <= wordsArr.length - phraseLength; i++) {
-      phrase = wordsArr.slice(i, phraseLength + i).join(' ');
+      phrase = wordsArr.slice(i, phraseLength + i).join(' ').toLowerCase();
 
       if (phraseMap.get(phrase)) {
         phraseMap.set(phrase, phraseMap.get(phrase) + 1);

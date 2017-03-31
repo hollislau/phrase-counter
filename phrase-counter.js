@@ -2,9 +2,11 @@ module.exports = exports = function (str) {
   const sentenceArr = str.split(/[.!?]/).filter((sentence) => {
     return sentence.length;
   });
+
   const wordsArr = sentenceArr.map((sentence) => {
     return sentence.trim().split(' ');
   });
+  
   const phraseMap = new Map();
   var phraseLength;
   var phrase;
@@ -38,16 +40,24 @@ module.exports = exports = function (str) {
 
   uniqueFiltered = [...phraseMap].filter((phraseCount) => {
     return phraseCount[1] > 1;
+  }).sort((a, b) => {
+    return b[0].length - a[0].length;
   });
+
   subsetFiltered = uniqueFiltered.filter((phraseCount) => {
-    for (let i = 0; i < uniqueFiltered.length; i++) {
-      if (uniqueFiltered[i][0].includes(phraseCount[0]) && uniqueFiltered[i][0] !== phraseCount[0]) {
+    var i = 0;
+
+    while (uniqueFiltered[i][0].length > phraseCount[0].length) {
+      if (uniqueFiltered[i][0].includes(phraseCount[0])) {
         return false;
       }
+
+      i++;
     }
 
     return true;
   });
+
   topTenSorted = subsetFiltered.sort((a, b) => {
     return b[1] - a[1];
   }).splice(0, 10);

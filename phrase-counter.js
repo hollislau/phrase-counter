@@ -9,7 +9,6 @@ module.exports = exports = function (str) {
   var phraseLength;
   var phrase;
   var uniqueFiltered;
-  var phraseArr;
   var subsetFiltered;
   var topTenSorted;
 
@@ -40,15 +39,10 @@ module.exports = exports = function (str) {
   uniqueFiltered = [...phraseMap].filter((phraseCount) => {
     return phraseCount[1] > 1;
   });
-  phraseArr = uniqueFiltered.map((phraseCount) => {
-    return phraseCount[0];
-  });
-  subsetFiltered = uniqueFiltered.filter((phrase) => {
+  subsetFiltered = uniqueFiltered.filter((phraseCount) => {
     for (let i = 0; i < uniqueFiltered.length; i++) {
-      for (let j = 0; j < phraseArr.length; j++) {
-        if (phraseArr[j].includes(phrase[0]) && phraseArr[j] !== phrase[0]) {
-          return false;
-        }
+      if (uniqueFiltered[i][0].includes(phraseCount[0]) && uniqueFiltered[i][0] !== phraseCount[0]) {
+        return false;
       }
     }
 

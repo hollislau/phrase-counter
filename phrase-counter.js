@@ -3,8 +3,10 @@ module.exports = exports = function (str) {
     return sentence.length;
   });
 
-  const wordsArr = sentenceArr.map((sentence) => {
-    return sentence.trim().split(' ');
+  const wordArr = sentenceArr.map((sentence) => {
+    return sentence.trim().split(/[ ,;:()*]/).filter((word) => {
+      return word.length;
+    });
   });
 
   const phraseMap = new Map();
@@ -14,13 +16,13 @@ module.exports = exports = function (str) {
   var subsetFiltered;
   var topTenSorted;
 
-  const _generatePhrases = (wordsArr) => {
+  const _generatePhrases = (wordArr) => {
     if (phraseLength < 3) {
       return;
     }
 
-    for (let i = 0; i <= wordsArr.length - phraseLength; i++) {
-      phrase = wordsArr.slice(i, phraseLength + i).join(' ').toLowerCase();
+    for (let i = 0; i <= wordArr.length - phraseLength; i++) {
+      phrase = wordArr.slice(i, phraseLength + i).join(' ').toLowerCase();
 
       if (phraseMap.get(phrase)) {
         phraseMap.set(phrase, phraseMap.get(phrase) + 1);
@@ -30,12 +32,12 @@ module.exports = exports = function (str) {
     }
 
     phraseLength--;
-    _generatePhrases(wordsArr);
+    _generatePhrases(wordArr);
   };
 
-  for (let i = 0; i < wordsArr.length; i++) {
-    phraseLength = wordsArr[i].length < 10 ? wordsArr[i].length : 10;
-    _generatePhrases(wordsArr[i]);
+  for (let i = 0; i < wordArr.length; i++) {
+    phraseLength = wordArr[i].length < 10 ? wordArr[i].length : 10;
+    _generatePhrases(wordArr[i]);
   }
 
   uniqueFiltered = [...phraseMap].filter((phraseCount) => {

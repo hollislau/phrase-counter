@@ -1,4 +1,10 @@
 module.exports = exports = function (str) {
+  var phraseLength;
+  var phrase;
+  var uniqueFiltered;
+  var subsetFiltered;
+  var topTenSorted;
+  
   const sentenceArr = str.split(/[.!?]/).filter((sentence) => {
     return sentence.length;
   });
@@ -10,11 +16,6 @@ module.exports = exports = function (str) {
   });
 
   const phraseMap = new Map();
-  var phraseLength;
-  var phrase;
-  var uniqueFiltered;
-  var subsetFiltered;
-  var topTenSorted;
 
   const _generatePhrases = (wordArr) => {
     if (phraseLength < 3) {
